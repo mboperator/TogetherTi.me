@@ -10,13 +10,15 @@
   "author": "Me",
   "license": "ISC",
   "dependencies": {
-    "react": "^0.13.1",
-    "uuid": "",
+    "instajam": "^2.0.1",
     "q": "^1.2.0",
+    "react": "^0.13.1",
     "reflux": "^0.2.6",
     "react-router": "^0.13.2",
+    "superagent": "",
+    "superagent-jsonp": "0.0.2",
     "underscore": "1.8.2",
-    "instagram-node": "^0.1.1"
+    "uuid": ""
   },
   "devDependencies": {
     "express": "^4.12.0",
