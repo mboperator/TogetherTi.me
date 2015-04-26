@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "instajam": "^2.0.1",
+    "moment": "^2.10.2",
     "parse": "^1.4.2",
     "parse-react": "^0.1.4",
     "q": "^1.2.0",
