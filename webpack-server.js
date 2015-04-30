@@ -32,6 +32,6 @@ module.exports = function() {
       stats: { colors: true },
   });
 
-  server.listen(8080, 'localhost', function() {});
-  app.listen(8081);
+  server.listen(7071, 'localhost', function() {});
+  app.listen(7070);
 };
