@@ -14,7 +14,7 @@ module.exports = {
     main: [
       'webpack-dev-server/client?http://localhost:8080/',
       'webpack/hot/only-dev-server',
-      './checklist/entry.js'
+      './lib/js/app.js'
     ],
     vendor: ["react", "underscore", "react-router", "q", "reflux", "moment" ]
   },
