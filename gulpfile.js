@@ -1,35 +1,16 @@
 var 
   gulp = require('gulp'),
-  webpack = require('gulp-webpack'),
   sass = require('gulp-sass'),
-  sourcemaps = require('gulp-sourcemaps'),
-  minifycss = require('gulp-minify-css'),
-  rename = require('gulp-rename'),
+  cached = require('gulp-cached'),
   autoprefixer = require('gulp-autoprefixer'),
-  tinylr;
+  minify = require('gulp-minify-css'),
+  sourcemaps = require('gulp-sourcemaps'),
+  browserSync = require('browser-sync').create(),
+  reload = browserSync.reload,
+  webpack = require('gulp-webpack'),
+  webpackServer = require('./webpack-server');
 
-function notifyLiveReload(event) {
-  var fileName = require('path').relative(__dirname, event.path);
-
-  tinylr.changed({
-    body: {
-      files: [fileName]
-    }
-  });
-}
-
-gulp.task('express', function() {
-  var express = require('express');
-  var app = express();
-  app.use(require('connect-livereload')({port: 7071}));
-  app.use(express.static('public'));
-  app.listen(7070);
-});
-
-gulp.task('livereload', function() {
-  tinylr = require('tiny-lr')();
-  tinylr.listen(7071);
-});
+gulp.task('webpack-hot', webpackServer); 
 
 gulp.task('webpack', function() {
   return gulp.src('./lib/js/app.js')
@@ -55,6 +36,4 @@ gulp.task('watch', function() {
   gulp.watch('./public/assets/js/*.js', notifyLiveReload);
 });
 
-gulp.task('default', ['styles', 'express', 'webpack', 'livereload', 'watch'], function() {
-
-});
+gulp.task('default', ['styles', 'express', 'webpack', 'livereload', 'watch']);
