@@ -43,6 +43,9 @@
     "webpack": "^1.8.3",
     "webpack-dev-server": "^1.8.2"
   },
+  "scripts": {
+    "start": "gulp webpack-hot"
+  },
   "jshintConfig": {
     "esnext": true,
     "expr": true
