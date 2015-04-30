@@ -12,17 +12,17 @@ module.exports = {
 
   entry: {
     main: [
-      'webpack-dev-server/client?http://localhost:8080/',
+      'webpack-dev-server/client?http://localhost:7071/',
       'webpack/hot/only-dev-server',
-      './lib/js/app.js'
+      './js/app.js'
     ],
     vendor: ["react", "underscore", "react-router", "q", "reflux", "moment" ]
   },
 
   output: {
     filename: '[name].bundle.js',
-    path: '../public/assets/js',
-    publicPath: 'http://localhost:8080/assets/js'
+    path: '/public/assets/js',
+    publicPath: 'http://localhost:7071/assets/js'
   },
 
   plugins: plugins,

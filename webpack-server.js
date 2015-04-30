@@ -22,13 +22,13 @@ module.exports = function() {
   var compiler = webpack(config);
 
   var server = new WebpackDevServer(compiler, {
-      contentBase: 'http://localhost:8080',
+      contentBase: 'http://localhost:7070',
       hot: true,
       quiet: false,
       noInfo: false,
       lazy: false,
       watchDelay: 20,
-      publicPath: 'http://localhost:8080/assets/js',
+      publicPath: 'http://localhost:7070/assets/js',
       stats: { colors: true },
   });
 
