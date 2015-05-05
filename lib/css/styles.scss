@@ -8,3 +8,15 @@ html {
   box-sizing: inherit;
 }
 
+.app-header {
+  padding-left: 15px;
+  display: table;
+
+  > * {
+    display:table-cell;
+  }
+}
+
+.mui-paper-container.mui-z-depth-bottom {
+  height: auto;
+ }
