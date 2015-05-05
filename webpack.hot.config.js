@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
 var plugins = [
-  new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin(),
   new webpack.OldWatchingPlugin()
@@ -11,31 +10,31 @@ module.exports = {
   context: __dirname + '/lib',
 
   entry: {
-    main: [
-      'webpack-dev-server/client?http://localhost:7071/',
+    app: [
+      'webpack-dev-server/client?http://localhost:8080/',
       'webpack/hot/only-dev-server',
       './js/app.js'
-    ],
-    vendor: ["react", "underscore", "react-router", "q", "reflux", "moment" ]
+    ]
   },
 
   output: {
     filename: '[name].bundle.js',
-    path: '/public/assets/js',
-    publicPath: 'http://localhost:7071/assets/js'
+    path: __dirname + '/public/assets/js',
+    publicPath: 'http://localhost:8080/assets'
   },
 
   plugins: plugins,
 
   module: {
     loaders: [
-      { 
+      {
         test: /\.js$/,
-        loaders: [ 'jsx-loader?harmony', 'react-hot'] 
+        loaders: [ 'jsx-loader?harmony', 'react-hot'],
+        include: path.join(__dirname, 'lib/js')
       },
-      { 
+      {
         test: /\.json$/,
-        loader: 'json-loader' 
+        loader: 'json-loader'
       }
     ]
   },
@@ -46,5 +45,5 @@ module.exports = {
 
   debug: true,
 
-  devtool: 'eval'
+  devtool: 'eval-source-map'
 };

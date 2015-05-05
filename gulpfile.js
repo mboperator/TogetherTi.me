@@ -10,30 +10,45 @@ var
   webpack = require('gulp-webpack'),
   webpackServer = require('./webpack-server');
 
+var cssPath = "lib/css/**/*.scss";
+var cssOutPath = "public/assets/css";
+var jsPath = "lib/js/**/*.js";
+var jsOutPath = "public/assets/js";
+
 gulp.task('webpack-hot', webpackServer); 
 
-gulp.task('webpack', function() {
-  return gulp.src('./lib/js/app.js')
-    .pipe(webpack( require('./webpack.config.js') ))
-    .pipe(gulp.dest('public/assets/js'));
+gulp.task('browsersync', function() {
+  browserSync.init({
+    proxy: '0.0.0.0:8081',
+    port: 8083
+  });
+  gulp.watch(cssPath, ['browsersync-build']);
+  gulp.watch('public/**/*.html', reload);
 });
 
-gulp.task('styles', function() {
-  return gulp.src(['./lib/css/*.scss'])
-    .pipe(sass())
-    .pipe(autoprefixer({ browsers: ['last 2 version'] }) )
-    .pipe(gulp.dest('./public/assets/css/'))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(minifycss())
-    .pipe(gulp.dest('./public/assets/css/'));
+gulp.task('browsersync-build', function() {
+  return gulp.src(cssPath)
+            .pipe(sass({errLogToConsole: true }))
+            .pipe(cached('styles'))
+            .pipe(autoprefixer({ browsers: ['last 2 versions']}))
+            .pipe(gulp.dest(cssOutPath))
+            .pipe(reload({stream: true}));
 });
 
-gulp.task('watch', function() {
-  gulp.watch('./lib/js/**/*.js', ['webpack']);
-  gulp.watch('./lib/css/*.scss', ['styles']);
-  gulp.watch('./public/*.html', notifyLiveReload);
-  gulp.watch('./public/assets/css/*.min.css', notifyLiveReload);
-  gulp.watch('./public/assets/js/*.js', notifyLiveReload);
+gulp.task('build_styles', function() {
+  return gulp.src(cssPath)
+            .pipe(sass({errLogToConsole: true }))
+            .pipe(autoprefixer({ browsers: ['last 2 versions']}))
+            .pipe(minify({compatibility: 'ie9'}))
+            .pipe(gulp.dest(cssOutPath));
 });
 
-gulp.task('default', ['styles', 'express', 'webpack', 'livereload', 'watch']);
+gulp.task('build_js', function() {
+  return gulp.src(jsPath)
+          .pipe(webpack(require('./webpack.config.js')))
+          .pipe(gulp.dest(jsOutPath));
+});
+
+gulp.task('dev', ['browsersync', 'webpack-hot']); 
+
+gulp.task('default', ['build_js', 'build_styles']);
